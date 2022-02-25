@@ -1,0 +1,8 @@
+name: EssentialsReborn
+version: '${project.version}'
+main: cacplugins.essentialsreborn.EssentialsReborn
+api-version: 1.18
+load: STARTUP
+authors: [ CacTt4ck ]
+description: An Essentials plugin remake
+website: cactt4ck.github.io
