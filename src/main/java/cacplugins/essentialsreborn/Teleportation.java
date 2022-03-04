@@ -1,8 +1,9 @@
 package cacplugins.essentialsreborn;
 
+import cacplugins.essentialsreborn.utils.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
@@ -10,28 +11,40 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.List;
 
-public class Teleportation implements CommandExecutor, TabExecutor {
-
+public class Teleportation implements TabExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
-        Player p = (Player) sender;
+        final Player p = (Player) sender;
+
         if (cmd.getName().equalsIgnoreCase("tp")) {
-            if (args.length == 1) {
-                if (Utils.isPlayerOnline(args[0])) {
-                    Player target = Bukkit.getServer().getPlayerExact(args[0]);
-                    p.teleportAsync(target.getLocation(), PlayerTeleportEvent.TeleportCause.COMMAND);
-                }
-            } else
-                return false;
+            if (args.length != 1) return false;
+
+            if (Utils.isPlayerOnline(args[0])) {
+                Player target = Bukkit.getServer().getPlayerExact(args[0]);
+                p.teleportAsync(target.getLocation(), PlayerTeleportEvent.TeleportCause.COMMAND);
+            }
+        } else if (cmd.getName().equalsIgnoreCase("back")) {
+            if (args.length != 0) return false;
+
+            HashMap<Player, Location> backMap = EssentialsReborn.getBackMap();
+            if (!backMap.containsKey(p)) return false;
+            p.teleportAsync(backMap.get(p));
         }
         return false;
     }
 
+
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias, @NotNull String[] args) {
+        if (cmd.getName().equalsIgnoreCase("tp")) {
+            if (args.length == 0) {
+                return Utils.getOnlinePlayerList(Bukkit.getServer().getOnlinePlayers(), (Player) sender);
+            }
+        }
         return null;
     }
 }

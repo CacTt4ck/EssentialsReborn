@@ -6,3 +6,12 @@ load: STARTUP
 authors: [ CacTt4ck ]
 description: An Essentials plugin remake
 website: cactt4ck.github.io
+
+commands:
+  tp:
+      description: tp a un endroit
+      usage: /<command> <player>
+
+  back:
+      description: vous renvoie à votre précédent emplacement
+      usage: /<command>
