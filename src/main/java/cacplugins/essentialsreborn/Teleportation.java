@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,14 +26,14 @@ public class Teleportation implements TabExecutor {
 
             if (Utils.isPlayerOnline(args[0])) {
                 Player target = Bukkit.getServer().getPlayerExact(args[0]);
-                p.teleportAsync(target.getLocation(), PlayerTeleportEvent.TeleportCause.COMMAND);
+                p.teleportAsync(target.getLocation(), TeleportCause.COMMAND);
             }
         } else if (cmd.getName().equalsIgnoreCase("back")) {
             if (args.length != 0) return false;
 
             HashMap<Player, Location> backMap = EssentialsReborn.getBackMap();
             if (!backMap.containsKey(p)) return false;
-            p.teleportAsync(backMap.get(p));
+            p.teleportAsync(backMap.get(p), TeleportCause.UNKNOWN);
         }
         return false;
     }
