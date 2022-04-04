@@ -7,7 +7,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -43,7 +42,7 @@ public class Teleportation implements TabExecutor {
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias, @NotNull String[] args) {
         if (cmd.getName().equalsIgnoreCase("tp")) {
             if (args.length == 0) {
-                return Utils.getOnlinePlayerList(Bukkit.getServer().getOnlinePlayers(), (Player) sender);
+                return Utils.getOtherOnlinePlayerList(Bukkit.getServer().getOnlinePlayers(), (Player) sender);
             }
         }
         return null;

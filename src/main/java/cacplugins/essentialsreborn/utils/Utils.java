@@ -14,7 +14,7 @@ public class Utils {
         return Bukkit.getServer().getOnlinePlayers().contains(Bukkit.getServer().getPlayerExact(playerName));
     }
 
-    public static List<String> getOnlinePlayerList(Collection<? extends Player> players, Player sender) {
+    public static List<String> getOtherOnlinePlayerList(Collection<? extends Player> players, Player sender) {
         List<String> list = new ArrayList<String>();
         for (Player player : players)
             list.add(player.getName());
